@@ -1,3 +1,32 @@
+# spit-maintainx-clean (Backend)
+
+This folder contains the backend API, database schema, and migration scripts for Maintainx.
+
+Quick commands
+
+Install dependencies:
+
+```bash
+cd spit-maintainx-clean
+pnpm install
+```
+
+Run development server:
+
+```bash
+pnpm run dev
+```
+
+Database & migrations
+
+- Drizzle config: `drizzle.config.ts`
+- Migrations: `drizzle/migrations/`
+- Seed script: `scripts/seed.ts`
+
+Useful notes
+
+- Edit environment variables or database connection in `drizzle.config.ts`.
+- Run migrations with your preferred Drizzle/CLI workflow.
 # SPIT MaintainX — Phase 1 + Phase 2 (Cleaned)
 ## Suppliers • Parts • Inventory Ledger • Requisitions • Purchase Orders + 1-Level Approval
 
