@@ -1,12 +1,12 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "spit-maintainx-phase4-final 2",
+  "name": "spit-maintainx-phase4",
   "compatibility_date": "2026-07-12",
   "observability": {
     "enabled": true
   },
   "assets": {
-    "directory": "spit-maintainx-frontend"
+    "directory": "spit-maintainx-frontend/dist"
   },
   "compatibility_flags": [
     "nodejs_compat"
