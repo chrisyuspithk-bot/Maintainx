@@ -1,76 +1,56 @@
-# Maintainx
+# SPIT MaintainX
 
-Maintainx is a small full-stack example project composed of a backend (Drizzle + TypeScript) and a frontend (Vite + React/TypeScript).
+Full-stack maintenance management system — Hono + Drizzle + Cloudflare Workers backend, React + TypeScript + Tailwind frontend.
 
-Status: work-in-progress — useful as a developer sandbox and reference for Drizzle-based projects.
+## Architecture
 
-Contents
-- Backend: `spit-maintainx-clean/` — API, database schema, and migration scripts.
-- Frontend: `spit-maintainx-frontend/` — Vite + React UI.
+```
+spit-maintainx-clean/     # Backend API (Hono on Cloudflare Workers, Drizzle + Neon Postgres)
+spit-maintainx-frontend/  # Frontend SPA (Vite, React 19, TypeScript, Tailwind CSS v4, React Router)
+wrangler.jsonc            # Cloudflare Workers deploy config
+```
 
-Quick start
+## Quick Start
 
-Prerequisites
-- Node.js (v18+ recommended)
-- A package manager: `pnpm`, `npm`, or `yarn`
-- (Optional) Docker or a local database if you want to run the DB outside the project container
+**Prerequisites:** Node.js 18+
 
-Backend (development)
-
-1. Change to the backend folder and install dependencies:
+### 1. Backend
 
 ```bash
 cd spit-maintainx-clean
-pnpm install
+npm install
+npm run dev          # Hono dev server on http://localhost:8787
 ```
 
-2. Run the dev server (check `package.json` scripts if `dev` differs):
+Database: Drizzle ORM with Neon Serverless Postgres. Migrations in `drizzle/`, config in `drizzle.config.ts`, seed data via `scripts/seed.ts`.
 
-```bash
-pnpm run dev
-```
-
-3. Migrations and DB
-
-- The project uses Drizzle ORM with SQL migration files located at `drizzle/migrations/`.
-- See `drizzle.config.ts` for database configuration.
-- There is a `scripts/seed.ts` file for seeding example data.
-
-Frontend (development)
-
-1. Change to the frontend folder and install dependencies:
+### 2. Frontend
 
 ```bash
 cd spit-maintainx-frontend
-pnpm install
+npm install
+npm run dev          # Vite dev server on http://localhost:5173
+                     # /api requests proxy → localhost:8787
 ```
 
-2. Start the Vite dev server:
+### 3. Deploy
 
 ```bash
-pnpm run dev
+cd spit-maintainx-frontend && npm run build    # outputs to dist/
+cd .. && npx wrangler deploy                    # serves API + built frontend
 ```
 
-Project structure (high level)
+## Frontend Features
 
-- `spit-maintainx-clean/`
-	- `src/` — backend source code and services
-	- `drizzle/` — Drizzle schema and migrations
-	- `scripts/seed.ts` — seed script for sample data
-- `spit-maintainx-frontend/`
-	- `src/` — React app
-	- `public/` — static assets
+- **9 routes**: Dashboard, Suppliers, Parts Catalog, Inventory, Purchase Orders (list + detail), Approvals Queue, Projects (list + detail), Maintenance (contracts / breakdowns / work orders)
+- **8 modal forms**: Create Supplier, Part, PO, Receive Goods, Project, Maintenance Contract, Breakdown Log, Work Order, Job Sheet
+- **Build-time Tailwind** via `@tailwindcss/vite` (no CDN)
+- **Component tree**: `Layout` (header + NavLink sidebar) → route pages → reusable UI primitives (Modal, StatusBadge, Toast, EmptyState)
 
-Notes & next steps
-- If you want, I can:
-	- Edit this README further to add badges, required environment variables, and example requests.
-	- Update or create READMEs inside the backend and frontend folders with project-specific commands.
+## Commands
 
-Contributing
-
-Contributions and improvements are welcome — open a PR or create an issue describing the change.
-
-License
-
-Specify your license here (e.g., MIT). If you already have a license file, link to it.
+| Layer | Type-check | Dev Server | Build |
+|---|---|---|---|
+| Backend | `npx tsc --noEmit` | `npm run dev` | `npx wrangler deploy` |
+| Frontend | `npx tsc -b --noEmit` | `npm run dev` | `npm run build` |
 
