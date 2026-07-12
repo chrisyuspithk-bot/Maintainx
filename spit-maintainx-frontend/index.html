@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SPIT MaintainX</title>
+    <!-- Tailwind CSS Play CDN for rapid prototyping -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      function initTailwind() {
+        document.documentElement.style.setProperty('--accent', '#0284c8');
+        if (window.tailwind) {
+          window.tailwind.config = {
+            theme: {
+              extend: {
+                colors: {
+                  primary: '#0ea5e9',
+                  'primary-dark': '#0284c8',
+                  accent: '#f59e0b',
+                  success: '#10b981',
+                  warning: '#f59e0b',
+                  danger: '#ef4444',
+                }
+              }
+            }
+          };
+        }
+      }
+      initTailwind();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
